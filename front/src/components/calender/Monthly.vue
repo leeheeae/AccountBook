@@ -3,9 +3,9 @@
 		<div class="mainTopContent">
 			<h2>{{ `${todayYear}년 ${todayMonth}월` }}</h2>
 			<div class="btnList">
-				<button class="prevBtn" onclick="prevMonth()">&lt;</button>
-				<button class="todayBtn" onclick="goToday()">오늘</button>
-				<button class="nextBtn" onclick="nextMonth()">&gt;</button>
+				<button class="prevBtn" @click="prevMonth()">&lt;</button>
+				<button class="todayBtn" @click="goToday()">오늘</button>
+				<button class="nextBtn" @click="nextMonth()">&gt;</button>
 			</div>
 		</div>
 		<div class="calender">
@@ -19,7 +19,13 @@
 				<div>토</div>
 			</div>
 			<div class="calendar-days">
-				<div v-for="item in dates" :key="item" v-html="item"></div>
+				<div
+					v-for="item in dates"
+					:key="item"
+					v-html="item"
+					class="date"
+					@click="$emit('dateClick')"
+				></div>
 			</div>
 		</div>
 	</div>
@@ -34,6 +40,7 @@
 				todayYear: '',
 				todayMonth: '',
 				dates: [],
+				today: new Date(),
 			};
 		},
 		methods: {
@@ -75,21 +82,59 @@
 				dates.forEach((date, i) => {
 					const dateState =
 						i >= firstDate && i <= lastDate ? 'this' : 'other';
-					dates[
-						i
-					] = `<div class="date"><span class="${dateState}"">${date}</span></div>`;
+					dates[i] = `<span class="${dateState}">${date}</span>`;
 				});
 
+				//그리기 데이터 넣기
 				this.dates = dates;
+
+				this.readToday();
+			},
+			readToday() {
+				//오늘 날짜 그리기
+				const thisMonth = document.querySelectorAll('.this');
+
+				for (let data of thisMonth) {
+					if (data.classList.contains('today')) {
+						data.classList.remove('today');
+					}
+				}
+				if (
+					this.todayMonth === this.today.getMonth() + 1 &&
+					this.todayYear === this.today.getFullYear()
+				) {
+					for (let date of thisMonth) {
+						if (Number(date.innerText) === this.today.getDate()) {
+							date.classList.add('today');
+							return;
+						}
+					}
+				}
+			},
+			prevMonth() {
+				this.date.setMonth(this.date.getMonth() - 1);
+				this.readCalender();
+			},
+			nextMonth() {
+				this.date.setMonth(this.date.getMonth() + 1);
+				this.readCalender();
+			},
+			goToday() {
+				this.date = new Date();
+				this.readCalender();
 			},
 		},
 		created() {
 			this.readCalender();
+			this.readToday();
+		},
+		mounted() {
+			this.readToday();
 		},
 	};
 </script>
 
-<style scoped>
+<style>
 	.mainTopContent {
 		width: 100%;
 		padding: 20px;
@@ -155,39 +200,40 @@
 		display: flex;
 		flex-wrap: wrap;
 	}
-	.calender .calendar-days > div {
+	.calender .calendar-days .date {
 		text-align: right;
 		padding: 6px 10px;
 		width: 14.2857142857%;
 		min-height: 100px;
 		border-bottom: 1px solid #ccc;
 		border-right: 1px solid #ccc;
-		font-size: 14px;
 	}
-	.calender .calendar-days > div:nth-child(7n) {
+	.calender .calendar-days > div span {
+		font-size: 14px;
+		font-weight: 600;
+	}
+	.calender .calendar-days > div:nth-child(7n) > span {
 		border-right: none;
 		color: #3976be;
 	}
 	.calender .calendar-days > div:nth-child(7n-6) {
 		color: #f50608;
 	}
-	.calender .calendar-days > div .other {
+	.calender .calendar-days .date .other {
 		opacity: 0.3;
 	}
 	.calender .calendar-days > div .today {
 		position: relative;
-		color: #fff;
+		color: #c5c21b;
 	}
-	.calender .calendar-days > div .today::after {
+	.calender .calendar-days > div .today::before {
 		content: '';
 		display: block;
 		position: absolute;
-		z-index: -1;
 		top: -3px;
 		left: -8px;
 		width: 24px;
 		height: 24px;
-		background-color: #3976be;
 		border-radius: 50%;
 	}
 </style>
