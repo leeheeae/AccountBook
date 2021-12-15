@@ -1,12 +1,18 @@
 <template>
 	<div class="wrap">
-		<!-- <div id="nav">
-			<router-link to="/">Home</router-link> |
-			<router-link to="/login">로그인</router-link>
-		</div> -->
+		<TopHeader />
 		<router-view />
 	</div>
 </template>
+<script>
+	import TopHeader from './components/TopHeader.vue';
+
+	export default {
+		components: {
+			TopHeader,
+		},
+	};
+</script>
 
 <style>
 	@import url(./assets/css/reset.css);
@@ -28,6 +34,5 @@
 		background-color: #fff;
 		box-shadow: 5px 10px 30px rgba(117, 117, 117, 0.1);
 		overflow-y: auto;
-		/* border-radius: 1rem; */
 	}
 </style>

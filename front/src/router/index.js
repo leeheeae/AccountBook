@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import Main from '../views/Main.vue';
 import Login from '../views/auth/Login.vue';
 import Join from '../views/auth/Join.vue';
 import firstSetting from '../views/setting/firstSetting.vue';
@@ -7,8 +7,8 @@ import firstSetting from '../views/setting/firstSetting.vue';
 const routes = [
 	{
 		path: '/',
-		name: 'Home',
-		component: Home,
+		name: 'Main',
+		component: Main,
 	},
 	{
 		path: '/login',

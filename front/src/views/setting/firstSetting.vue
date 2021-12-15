@@ -18,6 +18,12 @@
 				<p>생활비 설정하기</p>
 			</button>
 		</div>
+
+		<div class="drag-setting">
+			<input type="range" name="" id="" />
+		</div>
+
+		<button>시작하기</button>
 	</div>
 </template>
 
@@ -30,22 +36,12 @@
 		position: relative;
 		padding: 40px;
 	}
-	.setting::before {
-		position: absolute;
-		top: 0;
-		left: 0;
-		content: '';
-		display: block;
-		width: 100%;
-		height: 30vh;
-		background-color: #ddd;
-	}
 	.setting h1 {
 		font-size: 30px;
 		font-weight: 700;
 	}
 	.setting h4 {
-		font-size: 17px;
+		font-size: 16px;
 		font-weight: 500;
 		color: #444;
 		margin-top: 6px;
