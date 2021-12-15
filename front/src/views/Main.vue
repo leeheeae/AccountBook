@@ -10,19 +10,17 @@
 				</div>
 			</template>
 			<template v-slot:body>
-				<p>A paragraph for the main content.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
-				<p>And another one.</p>
+				<ul>
+					<li
+						v-for="item in this.$store.state.WhereDateList"
+						:key="item"
+						style="border-bottom: 1px solid #ccc; padding: 10px 0"
+					>
+						<div>제목 : {{ item.title }}</div>
+						<div>상태 : {{ item.state }}</div>
+						<div>날짜: {{ item.startDate }}</div>
+					</li>
+				</ul>
 			</template>
 			<template v-slot:footer>
 				<button class="addBtn">추가하기</button>
@@ -47,6 +45,8 @@
 		methods: {
 			clickShowModal() {
 				this.showModal = true;
+				//this.$store.dispatch('FETCH_DATE_LIST');
+				this.$store.dispatch('FETCH_WHERE_DATE_LIST', '2021-12-16');
 			},
 		},
 	};
