@@ -4,9 +4,9 @@
 		<Modal v-if="showModal" @close="showModal = false">
 			<template v-slot:header>
 				<div class="topInfo">
-					<h1>{{ this.thisDate }}</h1>
-					<div class="selectDay">수요일</div>
-					<div class="selectDate">2021-12-15</div>
+					<h1>{{ today }}</h1>
+					<div class="selectDay">{{ findingTodaysDate() }}</div>
+					<div class="selectDate">{{ dateChangeFormat() }}</div>
 				</div>
 			</template>
 			<template v-slot:body>
@@ -40,21 +40,43 @@
 		data() {
 			return {
 				showModal: false,
+				allDate: '',
+				today: '',
+				thisDate: [],
+				todayWeek: '',
 			};
 		},
 		methods: {
-			clickShowModal(item) {
+			clickShowModal(today, todayYear, todayMonth) {
 				this.showModal = true;
-				this.$store.dispatch('FETCH_WHERE_DATE_LIST', '2021-12-16');
-				console.log(item);
+				this.today = this.numExtraction(today);
+				this.thisDate = [todayYear, todayMonth, +this.today];
+				this.$store.dispatch(
+					'FETCH_WHERE_DATE_LIST',
+					this.dateChangeFormat()
+				);
+
+				this.findingTodaysDate();
 			},
-			// clickDate() {
-			// 	this.$store.state.WhereDateList;
-			// },
-		},
-		computed: {
-			// thisDate: this.$store.state.WhereDateList.startDate,
-			thisDate: '1',
+			numExtraction(item) {
+				//문자열을 제어하는 정규식 표현
+				const regex = /[^0-9]/g;
+				const result = item.replace(regex, '');
+				return result;
+			},
+			dateChangeFormat() {
+				return this.thisDate.join('-');
+			},
+			findingTodaysDate() {
+				//클릭한요일찾기
+				const year = this.thisDate[0];
+				const month = this.thisDate[1] - 1;
+				const today = this.thisDate[2];
+
+				const day = new Date(year, month, today).getDay();
+				const foramtDay = this.$store.state.DayFormat[day];
+				return foramtDay + '요일';
+			},
 		},
 	};
 </script>

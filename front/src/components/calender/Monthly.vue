@@ -24,7 +24,7 @@
 					:key="item"
 					v-html="item"
 					class="date"
-					@click="$emit('dateClick', this.numExtraction(item))"
+					@click="$emit('dateClick', item, todayYear, todayMonth)"
 				></div>
 			</div>
 		</div>
@@ -122,12 +122,6 @@
 			goToday() {
 				this.date = new Date();
 				this.readCalender();
-			},
-			numExtraction(item) {
-				//문자열을 제어하는 정규식 표현
-				const regex = /[^0-9]/g;
-				const result = item.replace(regex, '');
-				return result;
 			},
 		},
 		created() {
