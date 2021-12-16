@@ -55,8 +55,6 @@
 					'FETCH_WHERE_DATE_LIST',
 					this.dateChangeFormat()
 				);
-
-				this.findingTodaysDate();
 			},
 			numExtraction(item) {
 				//문자열을 제어하는 정규식 표현
