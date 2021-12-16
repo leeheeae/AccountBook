@@ -4,7 +4,7 @@
 		<Modal v-if="showModal" @close="showModal = false">
 			<template v-slot:header>
 				<div class="topInfo">
-					<h1>15</h1>
+					<h1>{{ this.thisDate }}</h1>
 					<div class="selectDay">수요일</div>
 					<div class="selectDate">2021-12-15</div>
 				</div>
@@ -43,11 +43,18 @@
 			};
 		},
 		methods: {
-			clickShowModal() {
+			clickShowModal(item) {
 				this.showModal = true;
-				//this.$store.dispatch('FETCH_DATE_LIST');
 				this.$store.dispatch('FETCH_WHERE_DATE_LIST', '2021-12-16');
+				console.log(item);
 			},
+			// clickDate() {
+			// 	this.$store.state.WhereDateList;
+			// },
+		},
+		computed: {
+			// thisDate: this.$store.state.WhereDateList.startDate,
+			thisDate: '1',
 		},
 	};
 </script>
